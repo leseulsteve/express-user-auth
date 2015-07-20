@@ -14,6 +14,10 @@ function UserAuth() {
 				}).unless({
 					path: app.config.unprotected
 				}));
+		},
+
+		getSecureUserSchema: function() {
+			return require('./node_modules/express-user-auth/');
 		}
 	}
 }
