@@ -2,7 +2,8 @@
   "name": "express-user-auth",
   "version": "0.0.1",
   "dependencies": {
-  	"express": "^4.12.3",
+    "express": "^4.12.3",
+    "express-jwt": "^3.0.1",
     "jsonwebtoken": "^5.0.4",
     "mongoose": "^4.0.8"
   }

@@ -1,19 +1,22 @@
 'use strict';
 
-var expressJwt = require('jsonwebtoken');
+var expressJwt = require('express-jwt');
 
 function UserAuth() {
 
 	return {
 
-		init: function(app, config) {
+		init: function(app, userSchema, config) {
 
-			/*app.use(config.apiUrl,
+			app.set('jwtConfig', config);
+
+			app.use(config.protected,
 				expressJwt({
 					secret: config.secret
 				}).unless({
-					path: app.config.unprotected
-				}));*/
+					path: config.unprotected
+				})
+			);
 		},
 
 		getSecureUserSchema: function() {
