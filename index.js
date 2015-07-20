@@ -1,7 +1,11 @@
 'use strict'
 
-var UserAuth = function(app) {
-
+function UserAuth() {
+	return {
+		init = function(app, config) {
+			console.log(config);
+		}
+	}
 }
 
-module.exports = UserAuth;
+module.exports = new UserAuth();
