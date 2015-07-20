@@ -1,6 +1,6 @@
 'use strict';
 
-var expressJwt = require('express-jwt');
+var expressJwt = require('jsonwebtoken');
 
 function UserAuth() {
 
@@ -8,16 +8,16 @@ function UserAuth() {
 
 		init: function(app, config) {
 
-			app.use(config.apiUrl,
+			/*app.use(config.apiUrl,
 				expressJwt({
 					secret: config.secret
 				}).unless({
 					path: app.config.unprotected
-				}));
+				}));*/
 		},
 
 		getSecureUserSchema: function() {
-			return require('./node_modules/express-user-auth/');
+			return require('./models/secure-user');
 		}
 	}
 }

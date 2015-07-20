@@ -1,11 +1,10 @@
 'use strict';
 
-var mongoose = require('mongoose'),
-	Schema = mongoose.Schema;
+var Schema = require('mongoose').Schema;
 
-var SecureUserScheman = new Schema({
-	username: String,
+module.exports = new Schema({
+	username: {
+		type: String
+	},
 	password: String
 }, { collection : 'users', discriminatorKey : '_type' });
-
-module.exports = mongoose.model('SecureUser', SecureUserScheman);
