@@ -28,8 +28,10 @@ var signIn = function(userSchema) {
 
         res.json({
           user: user,
-          expiration: new Date().getTime() + expiresInMinutes * 60000,
-          token: token
+          token: {
+            id: token,
+            expiration: new Date().getTime() + expiresInMinutes * 60000
+          } 
         });
       });
     }
