@@ -17,6 +17,9 @@ function UserAuth() {
 					path: config.unprotected
 				})
 			);
+
+			app.route(config.signinUrl)
+				.post(require('./middlewares/signin')(userSchema).process);
 		},
 
 		getSecureUserSchema: function() {
