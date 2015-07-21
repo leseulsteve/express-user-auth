@@ -3,8 +3,7 @@
 function UserAuth() {
 
 	var expressJwt = require('express-jwt'),
-		TokenService = require('./lib/services/token-service'),
-		UserAuth = ('./lib/controllers/user-auth');
+		TokenService = require('./lib/services/token-service');
 
 	return {
 
@@ -29,7 +28,7 @@ function UserAuth() {
 
 			TokenService.init(config.token);
 
-			UserAuthController = new UserAuth(UserSchema, MailTransporter, config);
+			var UserAuthController = require('./lib/controllers/user-auth')(UserSchema, MailTransporter, config);
 
 			app.route(config.resetPassword.url)
         .post(UserAuthController.resetPassword);
