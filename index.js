@@ -3,14 +3,12 @@
 function UserAuth() {
 
 	var expressJwt = require('express-jwt'),
-		tokenService = require('./lib/services/token-service'),
-		SignIn = require('./lib/middlewares/signin'),
-		ResetPassword = require('./lib/middlewares/reset-password');
-
+		TokenService = require('./lib/services/token-service'),
+		UserAuth = ('./lib/controllers/user-auth');
 
 	return {
 
-		init: function(app, UserSchema, config) {
+		init: function(app, UserSchema, MailTransporter, config) {
 
 			app.use(config.protectedRoute,
 				expressJwt({
@@ -29,15 +27,15 @@ function UserAuth() {
 				}
 			});
 
-			ResetPassword.init(UserSchema, config);
-			SignIn.init(app, UserSchema, config);
+			TokenService.init(config.token);
+
+			UserAuthController = new UserAuth(UserSchema, MailTransporter, config);
 
 			app.route(config.resetPassword.url)
-        .post(ResetPassword.sendToken);
-		},
+        .post(UserAuthController.resetPassword);
 
-		setMailTransporter: function(transporter) {
-			ResetPassword.setMailTransporter(transporter);
+      app.route(config.signin.url)
+      	.post(UserAuthController.signin);
 		},
 
 		getSecureUserSchema: function() {
