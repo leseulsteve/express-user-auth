@@ -9,15 +9,15 @@ function UserAuth() {
 
 		init: function(app, UserSchema, MailTransporter, config) {
 
-			app.use(config.protectedRoute,
+			app.use(config.apiRoot,
 				expressJwt({
 					secret: config.token.secret
 				}).unless({
-					path: config.unprotectedRoute
+					path: (config.unprotectedRoutes || []).concat([config.apiRoot + '/auth/signin', config.apiRoot + '/auth/send_password_token'])
 				})
 			);
 
-			app.use(function(err, req, res, next) {
+			app.use(config.apiRoot, function(err, req, res, next) {
 				if (!err) return next();
 				if (err.name === 'UnauthorizedError') {
 					res.status(401).send({
@@ -30,11 +30,14 @@ function UserAuth() {
 
 			var UserAuthController = require('./lib/controllers/user-auth')(UserSchema, MailTransporter, config);
 
-			app.route(config.resetPassword.url)
-        .post(UserAuthController.resetPassword);
-
-      app.route(config.signin.url)
+			app.route(config.apiRoot + '/auth/signin')
       	.post(UserAuthController.signin);
+
+			app.route(config.apiRoot + '/auth/send_password_token')
+        .post(UserAuthController.sendPasswordToken);
+
+      app.route(config.apiRoot + '/auth/change_passport')
+        .post(UserAuthController.changePassword);
 		},
 
 		getSecureUserSchema: function() {
