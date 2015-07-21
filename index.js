@@ -29,8 +29,11 @@ function UserAuth() {
 				}
 			});
 
-			ResetPassword.init(app, UserSchema, config);
+			ResetPassword.init(UserSchema, config);
 			SignIn.init(app, UserSchema, config);
+
+			app.route(config.resetPassword.url)
+        .post(ResetPassword.sendToken);
 		},
 
 		setMailTransporter: function(transporter) {
