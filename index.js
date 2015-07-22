@@ -4,7 +4,8 @@ function UserAuth() {
 
 	var expressJwt = require('express-jwt'),
 		TokenService = require('./lib/services/token-service'),
-		_ = require('lodash-node');
+		_ = require('lodash-node'),
+		UserAuthController;
 
 	var unless = function(path, middleware, unprotectedRoutes) {
 		return function(req, res, next) {
@@ -22,12 +23,12 @@ function UserAuth() {
 
 			TokenService.init(config.token, UserSchema);
 
-			var unprotectedRoutes = (config.unprotectedRoutes || []).concat([config.apiRoot + '/auth/signin', config.apiRoot + '/auth/send_password_token'])
+			var unprotectedRoutes = (config.unprotectedRoutes || []).concat([config.apiRoot + '/auth/signin', config.apiRoot + '/auth/send_password_token'], config.apiRoot + '/auth/signup'])
 
 			app.use(unless('/' + config.apiRoot + '/*', TokenService.validate, unprotectedRoutes));
 			app.use(unless('/' + config.apiRoot + '/*', TokenService.injectUser, unprotectedRoutes));
 
-			var UserAuthController = require('./lib/controllers/user-auth')(UserSchema, MailTransporter, config);
+			UserAuthController = require('./lib/controllers/user-auth')(UserSchema, MailTransporter, config);
 
 			app.route('/' + config.apiRoot + '/auth/signin')
 				.post(UserAuthController.signin);
@@ -35,9 +36,14 @@ function UserAuth() {
 			app.route('/' + config.apiRoot + '/auth/send_password_token')
 				.post(UserAuthController.sendPasswordToken);
 
-
 			app.route('/' + config.apiRoot + '/auth/change_passport')
 				.post(UserAuthController.changePassword);
+
+			app.route('/' + config.apiRoot + '/auth/signup')
+				.post(UserAuthController.signup);
+
+			app.route('/' + config.apiRoot + '/auth/confirm_email')
+				.post(UserAuthController.confirmEmail);
 		},
 
 		getSecureUserSchema: function() {
