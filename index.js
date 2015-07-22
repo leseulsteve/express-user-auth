@@ -20,7 +20,7 @@ function UserAuth() {
 
 		init: function(app, UserSchema, MailTransporter, config) {
 
-			TokenService.init(config.token);
+			TokenService.init(config.token, UserSchema);
 
 			var unprotectedRoutes = (config.unprotectedRoutes || []).concat([config.apiRoot + '/auth/signin', config.apiRoot + '/auth/send_password_token'])
 
