@@ -23,7 +23,7 @@ function UserAuth() {
 
 			TokenService.init(config.token, UserSchema);
 
-			var unprotectedRoutes = (config.unprotectedRoutes || []).concat([config.apiRoot + '/auth/signin', config.apiRoot + '/auth/send_password_token'], config.apiRoot + '/auth/signup'])
+			var unprotectedRoutes = (config.unprotectedRoutes || []).concat([config.apiRoot + '/auth/signin', config.apiRoot + '/auth/send_password_token' , config.apiRoot + '/auth/signup'])
 
 			app.use(unless('/' + config.apiRoot + '/*', TokenService.validate, unprotectedRoutes));
 			app.use(unless('/' + config.apiRoot + '/*', TokenService.injectUser, unprotectedRoutes));
