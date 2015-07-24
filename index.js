@@ -2,8 +2,7 @@
 
 function UserAuth() {
 
-	var expressJwt = require('express-jwt'),
-		TokenService = require('./lib/services/token-service'),
+	var TokenService = require('./lib/services/token-service'),
 		_ = require('lodash-node'),
 		UserAuthController;
 
