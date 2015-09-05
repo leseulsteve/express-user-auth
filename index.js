@@ -7,6 +7,17 @@ function UserAuth() {
 
 	var unless = function(path, middleware, unprotectedRoutes) {
 		return function(req, res, next) {
+			var wildCardRoutes = _.filter(unprotectedRoutes, function(unprotectedRoute) {
+				return _.endsWith(unprotectedRoute, '*');
+			});
+			console.log(wildCardRoutes)
+			for (var i = 0; i < wildCardRoutes.length; i++) {
+				var unprotectedRoute = wildCardRoutes[i]
+				if (unprotectedRoute.slice(0, -2) === req.path.substr(1).substring(0, req.path.substr(1).lastIndexOf('/'))) {
+					i = wildCardRoutes.length;
+					return next();
+				}
+			};
 			if (_.contains(unprotectedRoutes, req.path.substr(1))) {
 				return next();
 			} else {
