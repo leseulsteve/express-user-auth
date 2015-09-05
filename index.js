@@ -49,6 +49,9 @@ function UserAuth() {
 			app.route('/' + config.apiRoot + '/auth/signin')
 				.post(UserAuthController.signin);
 
+			app.route('/' + config.apiRoot + '/auth/signout')
+				.post(UserAuthController.signout);
+
 			app.route('/' + config.apiRoot + '/auth/signup')
 				.post(UserAuthController.signup);
 
