@@ -11,7 +11,8 @@ function UserAuth() {
 				return _.endsWith(unprotectedRoute, '*');
 			});
 			for (var i = 0; i < wildCardRoutes.length; i++) {
-				var unprotectedRoute = wildCardRoutes[i]
+				var unprotectedRoute = wildCardRoutes[i];
+				unprotectedRoutes.push(unprotectedRoute.slice(0, -2));
 				if (unprotectedRoute.slice(0, -2) === req.path.substr(1).substring(0, req.path.substr(1).lastIndexOf('/'))) {
 					i = wildCardRoutes.length;
 					return next();
