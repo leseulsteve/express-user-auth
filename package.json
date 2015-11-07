@@ -3,9 +3,10 @@
   "version": "0.0.1",
   "dependencies": {
     "express": "^4.12.3",
+    "handlebars": "^4.0.4",
     "jsonwebtoken": "^5.0.4",
-    "mongoose": "^4.0.8",
     "lodash-node": "^3.10.0",
+    "mongoose": "^4.0.8",
     "q": "^1.4.1"
   }
 }
